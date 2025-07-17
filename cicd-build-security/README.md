@@ -48,7 +48,7 @@ Creating a secure build environment is essential to protect the software develop
 - Validate **third-party dependencies**.
 - Monitor supplier security posture regularly.
 
-## Challenge Solutions
+## Challenges Solution
 
 ### Setup
 
@@ -261,23 +261,23 @@ production:
 2. Goto: `http://gitlab.tryhackme.loc/ash/environments/`
 3. Change to `DEV` Branch
 4. Edit `.gitlan-ci.yaml`
-```yaml
-stages:
-  - test
-  - deploy
+  ```yaml
+  stages:
+    - test
+    - deploy
 
-test:
-  stage: test
-  script:
-    - 'echo "${API_KEY}"'
+  test:
+    stage: test
+    script:
+      - 'echo "${API_KEY}"'
 
-production:
-  stage: deploy
-  when: manual
-  script:
-    - 'echo "${API_KEY}"'
-  environment:
-    name: ${CI_JOB_NAME}
+  production:
+    stage: deploy
+    when: manual
+    script:
+      - 'echo "${API_KEY}"'
+    environment:
+      name: ${CI_JOB_NAME}
 
-```
+  ```
 7. **Commit** and **Merge**!
