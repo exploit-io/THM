@@ -58,12 +58,10 @@ Creating a secure build environment is essential to protect the software develop
     sudo echo 10.200.59.160 jenkins.tryhackme.loc >> /etc/hosts
     ```
 
-2. Get User:Password from `MUTHER` server
+2. Get User:Password from `MUTHER` server(**Not Important for the Class, it is only for getting flags!**)
     ```sh
     ssh mother@10.200.59.250
     Password: motherknowsbest
-
-    ## Not Important for the Class
     ```
 
 ### Create Pipeline on `GITLAB`
