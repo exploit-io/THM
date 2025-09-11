@@ -6,7 +6,7 @@
 
 1. Finding open Ports: `nmap -p- -sV $TARGET`
 ```
-Nmap scan report for 10.10.106.109
+Nmap scan report for $TARGET
 Host is up (0.00016s latency).
 Not shown: 65527 closed ports
 PORT      STATE SERVICE VERSION
