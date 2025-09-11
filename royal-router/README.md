@@ -37,7 +37,7 @@ Password: (Blank)
 
 5. **CVE-2020-10213**: [Write-Up](https://tomorrowisnew.com/posts/hacking-the-dlink-dir-615-for-fun-and-no-profit-part-3-cve-2020-10213/)
 
-## Exploitiong Device
+## Exploiting Device
 
 1. Start Python Http Server on your system
 ```sh
