@@ -126,7 +126,7 @@ X-Middleware-Subrequest: middleware
 15. Lets use [CyberChef](https://gchq.github.io/CyberChef/) for creating `gopher` payloads by keeping conditions below: ✅
 - ☑️ Double Encode Payloads
 - ☑️ Convert `&` into `%26`
-- ☑️ Line Ending should be **CRLF**
+- ☑️ Line Endings should be **CRLF**
 
 ```
 gopher://127.0.0.1:10000/_GET /customapi HTTP/1.1
