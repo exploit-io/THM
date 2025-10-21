@@ -4,7 +4,7 @@
 
 ## Discovery
 
-1. First of all, Lets Find Open Ports: `nmap -p- -sV $TARGET`
+1. First of all, Lets Find Open Ports: `nmap -p- -sV $TARGET` 🎯
 ```
 Nmap scan report for $TARGET
 Host is up (0.00024s latency).
