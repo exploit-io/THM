@@ -135,5 +135,5 @@ X-Middleware-Subrequest: middleware
 
         ```
 
-        ![gopher ssrf](images/15-next-js-exploit.png)
+![gopher ssrf](images/15-next-js-exploit.png)
 
