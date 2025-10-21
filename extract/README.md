@@ -124,9 +124,9 @@ X-Middleware-Subrequest: middleware
 14. Don't worry, By diving in OLD Internet Protocols and PHP Wrappers. I could find `gopher://` which provides the capability of sending requests over tcp, specially `HTTP`. For Learning More About `gopher://`, check links in **References** section. 🔎
 
 15. Lets use [CyberChef](https://gchq.github.io/CyberChef/) for creating `gopher` payloads by keeping conditions below: ✅
-        - ☑️ Double Encode Payloads
-        - ☑️ Convert `&` into `%26`
-        - ☑️ Line Ending should be **CRLF**
+- ☑️ Double Encode Payloads
+- ☑️ Convert `&` into `%26`
+- ☑️ Line Ending should be **CRLF**
 
 ```
 gopher://127.0.0.1:10000/_GET /customapi HTTP/1.1
