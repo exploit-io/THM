@@ -104,3 +104,9 @@ ________________________________________________
 ```
 **Attention**: `-fl 1` didn't work, because response on port `10000` has only `1` line of code.
 
+10. Now, Lets Check Port `10000` on Browser: `http://$TARGET/preview.php?url=http://127.0.0.1:10000` 👀
+
+![API Internal](images/10-api.png)
+
+11. There is a Hidden API Here, But Accessing `http://127.0.0.1:10000/customapi` needs **Authentication** as the Image above says it loud and clear! 👂
+
