@@ -2,7 +2,7 @@
 
 * Solving [EXTRACT](https://tryhackme.com/room/extract)
 
-## Discovery
+## Discovery 🔎
 
 1. First of all, Lets Find Open Ports: `nmap -p- -sV $TARGET` 🎯
 ```
