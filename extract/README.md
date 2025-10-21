@@ -119,3 +119,7 @@ Host:127.0.0.1:10000
 X-Middleware-Subrequest: middleware
 ```
 
+13. Everything seems in order until you realize, There is **NO** way to send **HTTP Headers** in ssrf on this website (YET)! 😱
+
+14. Don't worry, By diving in OLD Internet Protocols and PHP Wrappers. I could find `gopher://` which provides the capability of sending requests over tcp, specially `HTTP`. For Learning More About `gopher://`, check links in **References** section. 🔎
+
