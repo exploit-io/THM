@@ -256,3 +256,8 @@ THM{804326748394ff9fb288e059653f0db7}
 ![fin burp](images/26-burp.png)
 ![fin flag](images/26-final-flag.png)
 
+## References 📚
+
+- https://medium.com/@zoningxtr/ultimate-guide-to-gopher-protocol-from-basics-to-real-exploits-ed2fb788d8e0
+- https://github.com/fuzzlove/GopherSSRF
+- https://github.com/eMVee-NL/SSRF2gopher
