@@ -23,6 +23,8 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 3. I tested all [PHP Wrappers](https://www.php.net/manual/en/wrappers.php) but nothing found! so I decided to dig in deeper! 😅
 
+![PHP Wrappers](images/03-wrapper.png)
+
 4. Next, I tried Finding Hidden Directories Using [RAFT Medium Directory List](https://github.com/danielmiessler/SecLists/blob/master/Discovery/Web-Content/raft-medium-directories.txt) 🔒
 ```sh
 ffuf -w raft-medium-directories.txt -u "http://$TARGET/FUZZ/"
