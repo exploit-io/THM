@@ -22,4 +22,5 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ![Burpsuite View](images/02-ssrf.png)
 
 3. I tested all [PHP Wrappers](https://www.php.net/manual/en/wrappers.php) but nothing found!
+3. I tested all [PHP Wrappers](https://www.php.net/manual/en/wrappers.php) but nothing found! so I decided to dig in deeper! 😅
 
