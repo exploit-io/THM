@@ -3,6 +3,7 @@
 These are my solutions for hacking challenges from multiple sources most likely from: [Try Hack Me](https://tryhackme.com).
 
 ## ☑️ Content
+* 🧠 Brains [🔥 Challenge](https://tryhackme.com/room/brains) [📝 Solution](./brains/README.md)
 * 🤖 CI/CD and Build Security [🔥 Challenge](https://tryhackme.com/room/cicdandbuildsecurity) [📝 Solution](./cicd-build-security/README.md)
 * Extract [🔥 Challenge](https://tryhackme.com/room/extract) [📝 Solution](./extract/README.md)
 * Hackfinity
