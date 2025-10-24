@@ -1,10 +1,10 @@
-# Hackfinity: PassCode
+# 😵 Hackfinity: PassCode
 
 * [PassCode](https://tryhackme.com/room/hfb1passcode)
 
-## 1. Setup
+## 🧩 Setup
 
-1. Run following Commands to Get Information
+1. Run following Commands to Get Information ☑️
 ```sh
 RPC_URL=http://$TARGET:8545
 API_URL=http://$TARGET
@@ -15,7 +15,7 @@ is_solved=`cast call $CONTRACT_ADDRESS "isSolved()(bool)" --rpc-url ${RPC_URL}`
 echo "Check if is solved: $is_solved"
 ```
 
-2. Create Directory and save everything into the files
+2. Create Directory and save everything into the files ☑️
 ```sh
 mkdir -p Desktop/passcode
 cd Desktop/passcode
@@ -24,7 +24,7 @@ echo $CONTRACT_ADDRESS > contract.txt
 echo $PLAYER_ADDRESS > player.txt
 ```
 
-3. Browse URL: `http://$TARGET` and Analyze the Code
+3. Browse URL: `http://$TARGET` 🕸️
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
@@ -64,9 +64,11 @@ contract Challenge {
 }
 ```
 
-## 2. Analyzing Code
+![solidity](images/03-ui.png)
 
-1. `flag` is being set on construction
+## 🧑‍💻 Analyzing Code
+
+4. `flag` is being set on construction.
 ```solidity
     constructor(string memory flag, string memory challenge_hint, uint256 challenge_code) {
         secret = flag;
@@ -75,7 +77,7 @@ contract Challenge {
     }
 ```
 
-2. `getFlag()` function, will retun the `flag` only if `unlock_flag` is `true`
+5. `getFlag()` function, will return the `flag` only if `unlock_flag` is `true`.
 ```solidity
     function getFlag() external view returns (string memory) {
         require(unlock_flag, "Challenge not solved yet");
@@ -83,7 +85,7 @@ contract Challenge {
     }
 ```
 
-3. `unlock()` function sets the `unlock_flag` if input is equal to `code`
+6. `unlock()` function sets the `unlock_flag` if input is equal to `code`.
 ```solidity
     function unlock(uint256 input) external returns (bool) {
         if (input == code) {
@@ -94,30 +96,39 @@ contract Challenge {
     }
 ```
 
-4. As long as there is no clue directing to `code`. The `hint()` function seems a good place to start.
+
+## 3. 🧨 Exploitation
+
+7. All You Need to Know:
+    * For Exploitiong You need some tools, we use `cast`, You'll find the link in **References**.
+    * You can execute public methods
+        * You don't need **Gas Fee** For `view` functions.
+
+8. As long as there is no clue directing to `code`. The `hint()` function seems a good place to start.
 ```solidity
     function hint() external view returns (string memory) {
         return hint_text;
     }
 ```
 
-## 3. Exploitation
-
-1. Run `cast` on `hint()` function
+9. Run `cast` on `hint()` function to read the **Hint**. It should help us.
 ```sh
 cast call $CONTRACT_ADDRESS "hint()(string)" --rpc-url ${RPC_URL}
-# The code is 333
+# The code is ***
 ```
 
-2. Response leaks the **`code`**: `The code is 333` but, we could do this without reading `hint()` function. Just read **slots** of smart contract by following command
+10. Response leaks the **`code`** but, we could do this without reading `hint()` function. Just read **slots** of smart contract by following command
 ```sh
 cast storage $CONTRACT_ADDRESS 2 --rpc-url ${RPC_URL}
-# 0x000000000000000000000000000000000000000000000000000000000000014d
+# 0x0000000000000000000000000000000000000000000000000000000000000***
+# This is code in Hex mode!
 ```
 
-3. Let's test the code on `unlock()` function
+![hint reading](images/08-09.png)
+
+11. Let's test the code on `unlock()` function and provide `code` as input, We'll provide **Private Key**. because we need to pay **Gas Fee**. 💸
 ```sh
-cast send $CONTRACT_ADDRESS "unlock(uint256)(bool)" 333 --rpc-url ${RPC_URL} --private-key $PRIVATE_KEY --legacy
+cast send $CONTRACT_ADDRESS "unlock(uint256)(bool)" *** --rpc-url ${RPC_URL} --private-key $PRIVATE_KEY --legacy
 # blockHash               0x17b728a7ed9431282716df16c6f472545885e2252a86b3c2d165d157d8912245
 # blockNumber             7
 # contractAddress         
@@ -137,21 +148,22 @@ cast send $CONTRACT_ADDRESS "unlock(uint256)(bool)" 333 --rpc-url ${RPC_URL} --p
 # to                      0xf22cB0Ca047e88AC996c17683Cee290518093574
 ```
 
-4. Check, if solved:
+![unlock](images/11-unlock.png)
+
+12. Check `isSolved()` function.
 ```sh
 cast call $CONTRACT_ADDRESS "isSolved()(bool)" --rpc-url ${RPC_URL}
 # true
 ```
 
-5. Get The Flag:
+13. Get The Flag ⛳️:
 ```sh
 cast call $CONTRACT_ADDRESS "getFlag()(string)" --rpc-url ${RPC_URL}
+# THM{w***_*******_***e}
 ```
 
-6. Flag: `THM{web3_h4ck1ng_code}`
+15. Never Forget Having Fun 🙂🙃🙂!
 
-7. Always Have Fun!
-
-## References
+## 📚 References
 
 * [Cast Application](https://getfoundry.sh/cast/overview)
