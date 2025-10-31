@@ -98,28 +98,28 @@ mv temp.rc .bashrc
 
 # ⛳️ Reverse Engineering: Flag 2
 
-14. Next Modified file with malware is: `/lib/x86_64-linux-gnu/liblogging.so`
+12. Another Modified file is: `/lib/x86_64-linux-gnu/liblogging.so`
 
-![file lib](images/14-lib.png)
+![file lib](images/12-lib.png)
 
-15. But There is no Backup file in `/tmp/logging.so`. We Found it somewhere else:
+13. But, File `/tmp/logging.so` does not exist. We could find it somewhere else:
 ```sh
 ls -l /lib/x86_64-linux-gnu/ | grep log
 -rwxrwxrwx 1 root root   23176 Jun 17  2020 liblogging.so
 -rwxr-xr-x 1 alex alex   16048 Jun 17  2020 oldliblogging.so
 ```
 
-16. Now Lets dump `liblogging.so` with `scp`.
+14. `liblogging.so` is definietly another stage of malware, we can't recover the server without getting it using `scp`.
 ```
 scp alex@$TARGET:/lib/x86_64-linux-gnu/liblogging.so ./liblogging.so
 ```
 
-17. Now, We need to Fix the `liblogging.so` file by replacing with OLD one (File Permissions Allow it).
+15. In the end of this section, `liblogging.so` should be replaced with OLD one (As step **13** shows, Current user has Permissions to do it).
 ```sh
 cp /lib/x86_64-linux-gnu/oldliblogging.so /lib/x86_64-linux-gnu/liblogging.so
 ```
 
-18. Flag 2 is Ready in WEB Site: `http://$TARGET:1337/`
+16. Flag 2 reveals in the panel: `http://$TARGET:1337/`
 
 # ⛳️ Reverse Engineering: Flag X
 
