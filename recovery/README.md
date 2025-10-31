@@ -136,24 +136,27 @@ scp alex@$TARGET:/bin/admin ./admin
 
 ![admin pass](images/19-pass-admin.png)
 
-# ⛳️ Reverse Engineering: Flag 1
+## ⛳️ Reverse Engineering: Flag 1
 
-23. Malware writes `brilliant_script.sh`
-
-24. Read it: `cat /opt/brilliant_script.sh`
+20. By analyzing `liblogging.so` more secrets reveal, It makes a **CRON JOB** in linux and writes `brilliant_script.sh` script and executes it periodically to close some applications such as `bash`. This is the reason Our **SSH** disconnects after short period of time.
 ```sh
+cat /opt/brilliant_script.sh
 #!/bin/sh
 
 for i in $(ps aux | grep bash | grep -v grep | awk '{print $2}'); do kill $i; done;
 ```
 
-25. Removing and Empty File:
+![cron job](images/20-cron-job.png)
+
+21. We have enough access to modify the File. By removing the last line of file, we can avoid closing **SSH sessions**.
 ```sh
 # Removing Last Line
 head -n 2 /opt/brilliant_script.sh > /opt/brilliant_script.sh
 ```
 
-26. This fixes the accidental shell closing and Gives Flag 1
+![disable bril](images/21-disable-brilliant.png)
+
+22. This fixes the accidental session closing and Gives us ⛳️ Flag 1
 
 ## Switching to user ROOT
 
