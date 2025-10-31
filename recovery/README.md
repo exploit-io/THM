@@ -61,7 +61,7 @@ scp alex@$TARGET:/home/alex/fixutil ./fixutil
 
 * **Attention**: Binaries of this challenge are already downloaded and included in this [Directory](files/).
 
-## ⛳️ Reverse Engineering: Flag 0
+## ⛳️ Flag 0: Fixing SSH Session
 
 6. 🐞 Open `fixutil` File in **IDA Free** (There is a free version of [**IDA Pro**](https://hex-rays.com/ida-free))
 
@@ -96,7 +96,7 @@ mv temp.rc .bashrc
 
 ![ssh normal](images/11-ssh-normal.png)
 
-## ⛳️ Reverse Engineering: Flag 2
+## ⛳️ Flag 2: Replacing Libraries
 
 12. Another Modified file is: `/lib/x86_64-linux-gnu/liblogging.so`
 
@@ -121,7 +121,7 @@ cp /lib/x86_64-linux-gnu/oldliblogging.so /lib/x86_64-linux-gnu/liblogging.so
 
 16. Flag 2 reveals in the panel: `http://$TARGET:1337/`
 
-## ⛳️ Reverse Engineering: Down to 🐰 Rabbit Hole 🕳️
+## ⛳️ Down to 🐰 Rabbit Hole 🕳️
 
 17. Last Modified File is: `/bin/admin`
 
@@ -136,7 +136,7 @@ scp alex@$TARGET:/bin/admin ./admin
 
 ![admin pass](images/19-pass-admin.png)
 
-## ⛳️ Reverse Engineering: Flag 1
+## ⛳️ Flag 1: Fix Accidental Session Closing
 
 20. By analyzing `liblogging.so` more secrets reveal, It makes a **CRON JOB** in linux and writes `brilliant_script.sh` script and executes it periodically to close some applications such as `bash`. This is the reason Our **SSH** disconnects after short period of time.
 ```sh
