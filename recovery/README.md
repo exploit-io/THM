@@ -45,7 +45,7 @@ YOU DIDN'T SAY THE MAGIC WORD!
 
 ![login error](images/03.png)
 
-4. 😎 SSH could be Forced to execute another binary immediately after login. This causes logging in and Finding the malware.
+4. 😎 SSH could be Forced to execute another binary immediately after login. This helps logging in and Finding the malware.
 ```ssh
 ssh alex@$TARGET '/bin/bash'
 ```
