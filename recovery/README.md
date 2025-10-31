@@ -121,20 +121,20 @@ cp /lib/x86_64-linux-gnu/oldliblogging.so /lib/x86_64-linux-gnu/liblogging.so
 
 16. Flag 2 reveals in the panel: `http://$TARGET:1337/`
 
-# ⛳️ Reverse Engineering: Down to 🐰 Rabbit Hole 🕳️
+## ⛳️ Reverse Engineering: Down to 🐰 Rabbit Hole 🕳️
 
-17. Last Modified File is `/bin/admin` which the malware adds:
+17. Last Modified File is: `/bin/admin`
 
-![admin file](images/19-admin-file.png)
+![admin file](images/17-admin-file.png)
 
-20. Dumping it with `scp`.
+18. Dumping it with `scp`.
 ```
 scp alex@$TARGET:/bin/admin ./admin
 ```
 
-21. RE this file and You'll See It has a SImple Password but no Flags Here!
+19. RE this file and You'll See It has a Simple Password but It seems there is nothing to follow here!
 
-22. It seems there is nothing to follow here!
+![admin pass](images/19-pass-admin.png)
 
 # ⛳️ Reverse Engineering: Flag 1
 
