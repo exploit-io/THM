@@ -63,39 +63,38 @@ scp alex@$TARGET:/home/alex/fixutil ./fixutil
 
 # ⛳️ Reverse Engineering: Flag 0
 
-7. 🐞 Lets Reverse Engineer (RE) the File in **IDA Free** (There is a free version for **IDA Pro** [here](https://hex-rays.com/ida-free))
+6. 🐞 Open `fixutil` File in **IDA Free** (There is a free version of [**IDA Pro**](https://hex-rays.com/ida-free))
 
-![asm file](images/07-asm.png)
+![asm file](images/06-asm.png)
 
-8. Lets Use DeCompiled Code, Pressing **F5** in IDA will give Us the DeCompiled code.
+7. Pressing **F5** in IDA will show Us the **decompiled** code.
 
-![c file](images/08-c.png)
+![c file](images/07-c.png)
 
-9. In the code, Lines 7 to 8 add a `while` loop into `.bashrc` and avoid loading `/bin/bash` after SSH login.
+8. Lines 7 to 8, show additon of a `while` loop into `.bashrc` and avoid loading `/bin/bash` on SSH login.
 ```
 \n\nwhile :; do echo \"YOU DIDN'T SAY THE MAGIC WORD!\"; done &\n
 ```
 
-![file bashrc](images/09-bashrc-edit.png)
+![file bashrc](images/08-bashrc-edit.png)
 
-10. Checking `.bashrc` file proves the assumption.
+09. Checking `.bashrc` file proves the assumption.
 
-![bashrc](images/10-bashrc.png)
+![bashrc](images/09-bashrc.png)
 
-11. Lets remove JUNK lines, It'll help us login using **SSH** properly.
+10. Lets remove **JUNK** lines, It'll help us login using **SSH** properly.
 ```sh
+# cut top 114 lines in .bashrc and ditch modified ones
 head -n 114 .bashrc > temp.rc
 # check temp.rc file, if everything is OK!?
 mv temp.rc .bashrc
 ```
 
-![tail bashrc](images/11-tail-bashrc.png)
+![tail bashrc](images/10-tail-bashrc.png)
 
-12. Vist the Flag Web Site and Get The Flag: `http://$TARGET:1337/`
+11. Fixing this issue, solves the SSH login problem and reveals the ⛳️ Flag 0 on: `http://$TARGET:1337/`
 
-13. Now, We Can Login Using SSH: `ssh alex@$TARGET`
-
-![ssh normal](images/13-ssh-normal.png)
+![ssh normal](images/11-ssh-normal.png)
 
 # ⛳️ Reverse Engineering: Flag 2
 
