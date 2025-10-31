@@ -121,9 +121,9 @@ cp /lib/x86_64-linux-gnu/oldliblogging.so /lib/x86_64-linux-gnu/liblogging.so
 
 16. Flag 2 reveals in the panel: `http://$TARGET:1337/`
 
-# ⛳️ Reverse Engineering: Flag X
+# ⛳️ Reverse Engineering: Down to 🐰 Rabbit Hole 🕳️
 
-19. Last File we need to analyze is `/bin/admin` which the malware adds:
+17. Last Modified File is `/bin/admin` which the malware adds:
 
 ![admin file](images/19-admin-file.png)
 
