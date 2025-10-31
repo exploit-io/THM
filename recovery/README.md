@@ -201,20 +201,27 @@ ssh -i id_rsa root@$TARGET
 
 ![user del](images/29-userdel.png)
 
-## ⛳️ Reverse Engineering: Flag 5
+## ⛳️ Flag 5: Recovering Web Files
 
-1. Malware uses **XOR** for encryting Files and saves the KEY inside: `/opt/.fixutil/backup.txt`
+30. As description says, This is a ransomware, in this server, web Files are encrypted and we need to Find key.
 
-2. use AI to generate code for decryption, It gave me this file
+31. As we go through malware in IDA. It seems backdoored library does the encryption job. **XOR** function is used for encryting web files. Randomly generated KEY is saved inside: `/opt/.fixutil/backup.txt` (LUCKY FOR US!)
+
+![random](images/31-rand-str.png)
+![ransome](images/31-xor-webfiles.png)
+
+32. Normally I use `python` for decryption but in this case, it is not installed on the server. AI generated a conprehensive code in **C** for us with following command:
 ```
 malware encrypted my files in: /usr/local/apache2/htdocs/
 I found the key in: /opt/.fixutil/backup.txt
 encryption algorithm is: xor
 help me with a code in C to decrypt them
 ```
-3. use nano to write it on target in the name of `xor_decrypt`
 
-4. lets build it on target and run it:
+* **Attention**: `xor_decrypt.c` File is [included](Files/xor_decrypt.c).
+
+33. Using `nano` or `vim` we could write the `xor_decrypt.c` file into the server and built it using **GCC** (AI gives the build instruction).
+
 ```sh
 gcc -O2 -Wall -o xor_decrypt xor_decrypt.c -std=c11 -D_XOPEN_SOURCE=700
 
@@ -225,6 +232,8 @@ gcc -O2 -Wall -o xor_decrypt xor_decrypt.c -std=c11 -D_XOPEN_SOURCE=700
 sudo ./xor_decrypt --key /opt/.fixutil/backup.txt --target /usr/local/apache2/htdocs
 ```
 
-5. Check the Web Pages and It is UP!
+![xor c](images/33-xor-decrypt-c.png)
 
-6. You get Flag 5 Here!
+34. Checking `http://$TARGET:80` shows the website is back and this should Give us the Final ⛳️ Flag (5)
+
+![web](images/34-website-up.png)
