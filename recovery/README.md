@@ -182,7 +182,7 @@ echo 'echo "ssh-rsa AAAA...U= root@recovery" > /root/.ssh/authorized_keys' >> /o
 
 ![add sshkey](images/25-add-ssh-key.png)
 
-26. If you check the reverse engineered library, Malware adds a SSH Key to root same as what we did. What we did in step 25, removes SSH Key of malware and gives us the ⛳️ Flag 3.
+26. If you check the reverse engineered library, Malware adds a SSH Key to root same as what we did, But what we did in step 25, removes SSH Key of malware and gives us the ⛳️ Flag 3.
 
 ## ⛳️ Reverse Engineering: Flag 4
 
