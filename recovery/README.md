@@ -184,11 +184,22 @@ echo 'echo "ssh-rsa AAAA...U= root@recovery" > /root/.ssh/authorized_keys' >> /o
 
 26. If you check the reverse engineered library, Malware adds a SSH Key to root same as what we did, But what we did in step 25, removes SSH Key of malware and gives us the ⛳️ Flag 3.
 
-## ⛳️ Reverse Engineering: Flag 4
+## ⛳️ Flag 4: Removing User
 
-1. in code, user `security` added
+27. Now, Logging into server with private key is simple.
+```
+ssh -i id_rsa root@$TARGET
+```
 
-2. delete user: `userdel -f security`
+![ssh root](images/27-login-root.png)
+
+28. REing the library file, shows addition of a user called: `security`
+
+![user addition](images/28-adding-user.png)
+
+29. For Flag 4 we need to Delete user: `userdel -f security`
+
+![user del](images/29-userdel.png)
 
 ## ⛳️ Reverse Engineering: Flag 5
 
