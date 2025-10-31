@@ -61,7 +61,7 @@ scp alex@$TARGET:/home/alex/fixutil ./fixutil
 
 * **Attention**: Binaries of this challenge are already downloaded and included in this [Directory](files/).
 
-# ⛳️ Reverse Engineering: Flag 0
+## ⛳️ Reverse Engineering: Flag 0
 
 6. 🐞 Open `fixutil` File in **IDA Free** (There is a free version of [**IDA Pro**](https://hex-rays.com/ida-free))
 
@@ -96,7 +96,7 @@ mv temp.rc .bashrc
 
 ![ssh normal](images/11-ssh-normal.png)
 
-# ⛳️ Reverse Engineering: Flag 2
+## ⛳️ Reverse Engineering: Flag 2
 
 12. Another Modified file is: `/lib/x86_64-linux-gnu/liblogging.so`
 
