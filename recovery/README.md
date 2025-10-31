@@ -71,7 +71,7 @@ scp alex@$TARGET:/home/alex/fixutil ./fixutil
 
 ![c file](images/07-c.png)
 
-8. Lines 7 to 8, show additon of a `while` loop into `.bashrc` and avoid loading `/bin/bash` on SSH login.
+8. Lines 6 to 8, show additon of a `while` loop into `.bashrc` and avoid loading `/bin/bash` on SSH login.
 ```
 \n\nwhile :; do echo \"YOU DIDN'T SAY THE MAGIC WORD!\"; done &\n
 ```
